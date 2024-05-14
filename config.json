@@ -1,0 +1,90 @@
+{
+  "vocab_params": {
+    "max_size": -1,
+    "min_freq": 0
+  },
+
+  "hyperparameters": [
+    {
+      "hidden_size": 100,
+      "num_layers": 1,
+      "rnn_type": "vanilla",
+      "dropout": 0,
+      "bidirectional": true,
+      "lr": 1e-3,
+      "gradient_clip": 0.1
+    },
+    {
+      "hidden_size": 150,
+      "num_layers": 2,
+      "rnn_type": "vanilla",
+      "dropout": 0.2,
+      "bidirectional": false,
+      "lr": 1e-4,
+      "gradient_clip": 0.6
+    },
+    {
+      "hidden_size": 200,
+      "num_layers": 2,
+      "rnn_type": "vanilla",
+      "dropout": 0.3,
+      "bidirectional": true,
+      "lr": 1e-2,
+      "gradient_clip": 0.6
+    },
+    {
+      "hidden_size": 100,
+      "num_layers": 1,
+      "rnn_type": "gru",
+      "dropout": 0,
+      "bidirectional": true,
+      "lr": 1e-2,
+      "gradient_clip": 0.4
+    },
+    {
+      "hidden_size": 150,
+      "num_layers": 2,
+      "rnn_type": "gru",
+      "dropout": 0.2,
+      "bidirectional": false,
+      "lr": 1e-3,
+      "gradient_clip": 0.25
+    },
+    {
+      "hidden_size": 200,
+      "num_layers": 2,
+      "rnn_type": "gru",
+      "dropout": 0.3,
+      "bidirectional": true,
+      "lr": 1e-4,
+      "gradient_clip": 0.25
+    },
+    {
+      "hidden_size": 100,
+      "num_layers": 1,
+      "rnn_type": "lstm",
+      "dropout": 0,
+      "bidirectional": true,
+      "lr": 1e-4,
+      "gradient_clip": 0.4
+    },
+    {
+      "hidden_size": 150,
+      "num_layers": 2,
+      "rnn_type": "lstm",
+      "dropout": 0.2,
+      "bidirectional": false,
+      "lr": 1e-2,
+      "gradient_clip": 0.5
+    },
+    {
+      "hidden_size": 200,
+      "num_layers": 2,
+      "rnn_type": "lstm",
+      "dropout": 0.3,
+      "bidirectional": true,
+      "lr": 1e-3,
+      "gradient_clip": 0.25
+    }
+  ]
+}
