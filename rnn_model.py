@@ -13,22 +13,27 @@ class ConfigurableRNN(nn.Module):
 
         self.rnn_layers = nn.ModuleList()
         for _ in range(num_layers):
+            input_size = 300
+            if _ != 0 and bidirectional is False:
+                input_size = hidden_size
+            elif _ != 0 and bidirectional is True:
+                input_size = 2 * hidden_size
             if self.rnn_type == 'lstm':
-                rnn_layer = nn.LSTM(input_size=300 if _ == 0 else hidden_size,
+                rnn_layer = nn.LSTM(input_size=input_size,
                                     hidden_size=hidden_size,
                                     num_layers=1,
                                     dropout=dropout if num_layers != 1 else 0,
                                     bidirectional=bidirectional,
                                     batch_first=True)
             elif self.rnn_type == 'gru':
-                rnn_layer = nn.GRU(input_size=300 if _ == 0 else hidden_size,
+                rnn_layer = nn.GRU(input_size=input_size,
                                    hidden_size=hidden_size,
                                    num_layers=1,
                                    dropout=dropout if num_layers != 1 else 0,
                                    bidirectional=bidirectional,
                                    batch_first=True)
             elif self.rnn_type == 'vanilla':
-                rnn_layer = nn.RNN(input_size=300 if _ == 0 else hidden_size,
+                rnn_layer = nn.RNN(input_size=input_size,
                                    hidden_size=hidden_size,
                                    num_layers=1,
                                    nonlinearity='tanh',

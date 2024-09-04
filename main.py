@@ -2,9 +2,7 @@ import json
 
 import numpy as np
 import torch
-from torch import nn
 from torch.nn import BCEWithLogitsLoss
-from torch.optim import Adam
 from torch.utils.data import DataLoader
 from loader import Vocab, NLPDataset, generate_frequencies, generate_instances, pad_collate_fn, \
     generate_embedding_matrix
@@ -24,16 +22,16 @@ def run_model_with_config(config, embeddings, train_loader, valid_loader, test_l
     grad_clip = config['gradient_clip']
 
     rnn_model = ConfigurableRNN(embeddings, hidden_size, num_layers, rnn_type, dropout, bidirectional)
-    optimizer = torch.optim.Adam(rnn_model.parameters(), lr=1e-4)
+    optimizer = torch.optim.Adam(rnn_model.parameters(), lr=lr)
     train(rnn_model, train_loader, valid_loader, criterion, optimizer, gradient_clip=grad_clip, num_epochs=5)
 
-    evaluation_results_file = f"evaluation_results_{rnn_type}_{hidden_size}_{num_layers}_{dropout}_{lr}_{grad_clip}_{bidirectional}.txt"
+    evaluation_results_file = f"aaaaaaaaaaaaaa.txt"
     evaluate(rnn_model, test_loader, criterion, evaluation_results_file)
 
 
 def main():
-    np.random.seed(7052020)
     torch.manual_seed(7052020)
+    np.random.seed(7052020)
     instances = generate_instances('data/sst_train_raw.csv')
 
     with open('config.json', 'r') as f:
@@ -58,16 +56,16 @@ def main():
     # optimizer = torch.optim.Adam(baseline_model.parameters(), lr=1e-4)
     # train(baseline_model, train_loader, valid_loader, criterion, optimizer)
     # evaluate(baseline_model, test_loader, criterion, 'evaluation_result_baseline.txt')
-    #
-    # lstm_model = LSTMModel(embeddings)
-    # optimizer = torch.optim.Adam(lstm_model.parameters(), lr=1e-4)
-    # train(lstm_model, train_loader, valid_loader, criterion, optimizer, num_epochs=5)
-    # evaluate(lstm_model, test_loader, criterion, 'evaluation_results_lstm.txt')
 
-    for idx, config in enumerate(config_data['hyperparameters']):
-        print(f"Running configuration {idx + 1}")
-        run_model_with_config(config, embeddings, train_loader, valid_loader, test_loader, criterion)
-        print(f"Configuration {idx + 1} completed.")
+    lstm_model = LSTMModel(embeddings)
+    optimizer = torch.optim.Adam(lstm_model.parameters(), lr=1e-3)
+    train(lstm_model, train_loader, valid_loader, criterion, optimizer, num_epochs=5)
+    evaluate(lstm_model, test_loader, criterion, 'evaluation_results_lstm.txt')
+
+    # for idx, config in enumerate(config_data['hyperparameters']):
+    #     print(f"Running configuration {idx + 1}")
+    #     run_model_with_config(config, embeddings, train_loader, valid_loader, test_loader, criterion)
+    #     print(f"Configuration {idx + 1} completed.")
 
 
 if __name__ == '__main__':
